@@ -11,12 +11,9 @@ import {
 } from '@/runtime'
 
 var localDriver = require('./drivers/driver')
-
 window.currentDriver = localDriver
-
 // index by tabId
 var logWatchers = {}
-
 
 var rawLogFun = console.log
 var _isInjected = false
@@ -53,8 +50,8 @@ function brodcastToWatcher(args) {
   }
 }
 
-var service = analytics.getService('syncer')
-var tracker = service.getTracker('UA-48134052-13')
+// var service = analytics.getService('syncer')
+// var tracker = service.getTracker('UA-48134052-13')
 
 let getDriver = localDriver.getDriver
 let getPublicAccounts = localDriver.getPublicAccounts
@@ -66,14 +63,14 @@ async function setDriver(driver) {
   getPublicAccounts = async function() {
     var users = await window.currentDriver.getPublicAccounts()
     try {
-      users.forEach(publicAccount => {
-        console.log('tracker', publicAccount)
-        tracker.sendEvent(
-          'user',
-          publicAccount.type,
-          [publicAccount.uid, publicAccount.title].join('-')
-        )
-      })
+      // users.forEach(publicAccount => {
+      //   console.log('tracker', publicAccount)
+      //   tracker.sendEvent(
+      //     'user',
+      //     publicAccount.type,
+      //     [publicAccount.uid, publicAccount.title].join('-')
+      //   )
+      // })
     } catch (e) {
       console.log(e)
     }
@@ -289,18 +286,18 @@ class Syner {
         self.senders[request.task.guid] = sender
         sendResponseA(request.task.guid)
         try {
-          var newTask = request.task
-          tracker.sendEvent('add', 'link', request.task.post.link)
-          tracker.sendEvent(
-            'add',
-            'title',
-            [
-              request.task.post.title,
-              newTask.accounts.map(account => {
-                return [account.type, account.uid, account.title].join('-')
-              }),
-            ].join(';;')
-          )
+          // var newTask = request.task
+          // tracker.sendEvent('add', 'link', request.task.post.link)
+          // tracker.sendEvent(
+          //   'add',
+          //   'title',
+          //   [
+          //     request.task.post.title,
+          //     newTask.accounts.map(account => {
+          //       return [account.type, account.uid, account.title].join('-')
+          //     }),
+          //   ].join(';;')
+          // )
         } catch (e) {
           console.log(e)
         }
@@ -352,8 +349,8 @@ class Syner {
         console.log(request)
         ;(async () => {
           try {
-            var event = request.event
-            tracker.sendEvent(event.category, event.action, event.label)
+            // var event = request.event
+            // tracker.sendEvent(event.category, event.action, event.label)
           } catch (e) {}
           // var d = {}
           // d[request.name] = request.value
@@ -583,7 +580,7 @@ class Syner {
               }
 
               console.log(account.editResp, link)
-              tracker.sendEvent('sync', 'sucess', link)
+              // tracker.sendEvent('sync', 'sucess', link)
             } catch (e) {
               console.error(e)
               var msgErro = e ? e.toString() : '未知错误'
@@ -612,18 +609,18 @@ class Syner {
                 accounts: currentTask.accounts,
               })
 
-              tracker.sendEvent('sync', 'error', msgErro)
-              tracker.sendEvent(
-                'sync',
-                account.type + '-error',
-                [currentTask.post.link, +msgErro].join(':')
-              )
-
-              tracker.sendEvent(
-                'sync-' + window.driverMeta.versionNumber,
-                'error',
-                msgErro
-              )
+              // tracker.sendEvent('sync', 'error', msgErro)
+              // tracker.sendEvent(
+              //   'sync',
+              //   account.type + '-error',
+              //   [currentTask.post.link, +msgErro].join(':')
+              // )
+              //
+              // tracker.sendEvent(
+              //   'sync-' + window.driverMeta.versionNumber,
+              //   'error',
+              //   msgErro
+              // )
             }
           }
         } catch (e) {
@@ -650,10 +647,8 @@ class Syner {
 
     try {
       if (driver.preEditPost) {
-        console.log('driver.preEditPost')
         await driver.preEditPost(postContent)
       } else {
-        console.log('driver.preEditPost skip')
       }
     } catch (e) {
       console.log('preEditPost', e)
@@ -663,17 +658,14 @@ class Syner {
       const isAddPromitionDisabled = await isDisableAddPromotion()
       if (!isAddPromitionDisabled) {
         if (driver.addPromotion) {
-          console.log('driver.addPromotion')
           await driver.addPromotion(postContent)
         }
       } else {
-        console.log('driver.addPromotion skip')
       }
     } catch (e) {
       console.log('addPromotion', e)
     }
 
-    console.log('driver instance', driver)
     var addResp = await driver.addPost(
       Object.assign(
         {
@@ -777,6 +769,7 @@ class Syner {
     // 设置缩略图
     var post_thumbnail = null
     var editInput = {
+      ...postContent,
       post_title: postContent.title,
       post_content: postContent[`content_${account.type}`]
         ? postContent[`content_${account.type}`]

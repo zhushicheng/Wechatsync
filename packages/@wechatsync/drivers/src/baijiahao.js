@@ -12,7 +12,6 @@ export default class BaiJiaHaoAdapter {
 
   async getMetaData() {
     const { data } = await axios.get('https://baijiahao.baidu.com/builder/app/appinfo?_=' + Date.now())
-    console.log(data)
     if(data.errmsg != 'success') {
     	throw new Error('not found')
     }
@@ -37,19 +36,29 @@ export default class BaiJiaHaoAdapter {
   }
 
   async editPost(post_id, post) {
+    console.log(111111111, post)
     // todo
-    const pageHtml = await $.get('https://baijiahao.baidu.com/builder/rc/edit')
-    const markStr = 'window.__BJH__INIT__AUTH__="'
-    const authIndex = pageHtml.indexOf(markStr)
-    if(authIndex == -1) {
-    	throw new Error('登录失效')
+    // const pageHtml = await $.get('https://baijiahao.baidu.com/builder/rc/edit')
+    // const markStr = 'window.__BJH__INIT__AUTH__="'
+    // const authIndex = pageHtml.indexOf(markStr)
+    // if(authIndex == -1) {
+    // 	throw new Error('登录失效')
+    // }
+    //
+    // const authToken = pageHtml.substring(authIndex + markStr.length, pageHtml.indexOf('",window.__BJH__EDIT__VERSION__', authIndex))
+
+    const params = {
+      "app_id" : '1724300272786781',
+      "app_token" : '176d2e2e958836326e03a23ca65ecf1b',
+      "title": post.post_title,
+      "content": post.post_content,
+      "origin_url": 'https://www.yun36.com',
+      "cover_images": `[{\"src\":\"${post.thumb}\"}]`,
+      "is_original" : 0,
+      // "is_split_article":1,
+      // "video_title":"视频-北京日报联合百家号，内容、技术相互赋能",
+      // "video_cover_images":"https://pic.rmb.bdstatic.com/a7b60cf66811e27d7f7466f88ba176e5.jpeg",
     }
-
-    const authToken = pageHtml.substring(authIndex + markStr.length, pageHtml.indexOf('",window.user_id', authIndex))
-
-
-
-
     const postStruct = {
       title: post.post_title,
       content: post.post_content,
@@ -71,22 +80,24 @@ export default class BaiJiaHaoAdapter {
       type: 'news',
     }
     const res = await $.ajax({
-    	url: 'https://baijiahao.baidu.com/pcui/article/save?callback=_SAVE_DRAFT_',
+    	// url: 'https://baijiahao.baidu.com/pcui/article/save?callback=_SAVE_DRAFT_',
+    	url: 'https://baijiahao.baidu.com/builderinner/open/resource/article/publish',
       type: 'POST',
       dataType: 'JSON',
-      headers: {
-        token: authToken
-      },
-      data: postStruct,
+      // headers: {
+      //   token: authToken
+      // },
+      data: params,
     })
-    if(res.errmsg != 'success') {
+    if(res.errno != 0) {
     	throw new Error(res.errmsg)
     }
-    post_id = res.ret.article_id
+    post_id = res.data.article_id
     return {
       status: 'success',
       post_id: post_id,
-      draftLink: 'https://baijiahao.baidu.com/builder/rc/edit?type=news&article_id=' + post_id,
+      // draftLink: 'https://baijiahao.baidu.com/builder/rc/edit?type=news&article_id=' + post_id,
+      draftLink: 'https://baijiahao.baidu.com/builder/preview/s?id=' + post_id,
     }
   }
 
@@ -98,7 +109,7 @@ export default class BaiJiaHaoAdapter {
     var formdata = new FormData()
     formdata.append('media', file)
     formdata.append('type', 'image')
-    formdata.append('app_id', '1589639493090963')
+    formdata.append('app_id', '1724300272786781')
     formdata.append('is_waterlog', '1')
     formdata.append('save_material', '1')
     formdata.append('no_compress', '0')

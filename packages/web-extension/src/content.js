@@ -118,7 +118,7 @@ if (isSinglePage) {
         (account.icon
           ? account.icon
           : chrome.extension.getURL('images/wordpress.ico')) +
-        `" class="icon" height="20" style="vertical-align: -3px;height: 20px !important"> 
+        `" class="icon" height="20" style="vertical-align: -3px;height: 20px !important">
   ` +
         account.title +
         `
@@ -180,7 +180,7 @@ var html = `
         </button>
       </div>
       <div class="modal-body">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-size: 13px;    line-height: 1.5;">取消</button>
@@ -427,7 +427,7 @@ function buildStatusHtml(taskStatus) {
           `"
                       style="margin-left: 5px"
                       target="_blank"
-                      >查看草稿</a
+                      >查看文章</a
                     >`
         : ``)
     if (isNotFirstAppend) {
@@ -701,7 +701,7 @@ if (isEditorPage) {
           (account.icon
             ? account.icon
             : chrome.extension.getURL('images/wordpress.ico')) +
-          `" class="icon" height="18" style="height: 20px !important"> 
+          `" class="icon" height="18" style="height: 20px !important">
   ` +
           account.title +
           `
@@ -759,7 +759,7 @@ function buildStatusContainer() {
     line-height: 50px;
     height: 50px;
 ">
-  <h3 class="weui-desktop-dialog__title">同步助手</h3> 
+  <h3 class="weui-desktop-dialog__title">同步助手</h3>
     <button class="weui-desktop-icon-btn weui-desktop-dialog__close-btn"><svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M10.01 8.996l7.922-7.922c.086-.086.085-.21.008-.289l-.73-.73c-.075-.074-.208-.075-.29.007L9 7.984 1.077.062C.995-.02.863-.019.788.055l-.73.73c-.078.078-.079.203.007.29l7.922 7.92-7.922 7.922c-.086.086-.085.212-.007.29l.73.73c.075.074.207.074.29-.008l7.92-7.921 7.922 7.921c.082.082.215.082.29.008l.73-.73c.077-.078.078-.204-.008-.29l-7.921-7.921z"></path></svg></button></div>
     <div style="    width: 100%;
     min-height: 300px;

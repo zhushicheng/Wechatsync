@@ -1,6 +1,5 @@
 // console.log('segmenftfault')
 function testFunc() {
-  console.log('api ready')
   var poster = {
     versionNumber: 1001,
     dev: process.env.WECHAT_ENV === 'development',

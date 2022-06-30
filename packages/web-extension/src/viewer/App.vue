@@ -57,7 +57,7 @@
                       v-if="account.type != 'wordpress' && account.editResp"
                       style="margin-left: 5px"
                       target="_blank"
-                      >查看草稿</a
+                      >查看文章</a
                     >
                   </template>
                 </span>
