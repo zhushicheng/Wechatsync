@@ -58,7 +58,7 @@ setTimeout(function() {
   var script = document.createElement('script')
   script.type = 'text/javascript'
   script.innerHTML =
-    "if(typeof msg_desc != 'undefined') { document.body.setAttribute('data-msg_desc', msg_desc );document.body.setAttribute('data-msg_title', msg_title);document.body.setAttribute('data-msg_cdn_url', msg_cdn_url); }"
+    "if(typeof msg_desc != 'undefined') { document.body.setAttribute('data-ct', ct); document.body.setAttribute('data-nickname', nickname); document.body.setAttribute('data-msg_desc', msg_desc );document.body.setAttribute('data-msg_title', msg_title);document.body.setAttribute('data-msg_cdn_url', msg_cdn_url); }"
   document.head.appendChild(script)
   document.head.removeChild(script)
 }, 50)
@@ -70,6 +70,8 @@ function getPost() {
   post.content = $('#js_content').html()
   post.thumb = document.body.getAttribute('data-msg_cdn_url')
   post.desc = document.body.getAttribute('data-msg_desc')
+  post.nickname = document.body.getAttribute('data-nickname')
+  post.publish_time = document.body.getAttribute('data-ct')
   post.link = window.location.href
   console.log(post)
   return post

@@ -27,7 +27,6 @@ export default class BaiJiaHaoAdapter {
       icon: 'https://www.baidu.com/favicon.ico?t=20171027',
     }
   }
-
   async addPost(post, _instance) {
     return {
       status: 'success',

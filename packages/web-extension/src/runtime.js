@@ -1,5 +1,6 @@
 import Sval from 'sval'
 import svalScopes from '@wechatsync/drivers/scopes'
+import moment from 'moment'
 
 export function getSettings() {
   return new Promise((resolve, reject) => {
@@ -22,6 +23,12 @@ export function getSettings() {
   })
 }
 
+function wait(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 function getRuntimeScopes() {
   return {
     ...svalScopes,
@@ -31,6 +38,8 @@ function getRuntimeScopes() {
     document: document,
     Blob: Blob,
     Promise: Promise,
+    wait: wait,
+    moment: moment,
     getSettings: getSettings,
     setCache: setCache,
     getCache: getCache,
