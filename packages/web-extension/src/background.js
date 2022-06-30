@@ -768,7 +768,6 @@ class Syner {
     // 设置缩略图
     var post_thumbnail = null
     var editInput = {
-      ...postContent,
       post_title: postContent.title,
       post_content: postContent[`content_${account.type}`]
         ? postContent[`content_${account.type}`]
